@@ -1,0 +1,316 @@
+/* ── Design Tokens ──────────────────────────────────────────────────────── */
+:root {
+  --bg-canvas:      #0d1117;
+  --bg-surface:     #161b27;
+  --bg-surface-2:   #1e2535;
+  --bg-surface-3:   #252d40;
+  --border:         #2a3352;
+  --border-light:   #334268;
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #525a6a;
+  --accent:         #4f8ef7;
+  --accent-green:   #00d68f;
+  --accent-purple:  #9b72f7;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md:      0 4px 14px rgba(0,0,0,0.55);
+  --shadow-lg:      0 8px 28px rgba(0,0,0,0.65);
+  --radius-sm:      4px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --font:           'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root { height: 100vh; display: flex; flex-direction: column; }
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+/* ── App Shell ───────────────────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  min-height: 52px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  z-index: 100;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+.app-logo-icon {
+  font-size: 22px;
+  color: var(--accent);
+  line-height: 1;
+}
+.app-logo-text {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+}
+.app-logo-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 99px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Sidebar / Toolbar ───────────────────────────────────────────────────── */
+.app-sidebar {
+  width: 180px;
+  min-width: 180px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-canvas {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.toolbar {
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toolbar-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 6px 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+.toolbar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 8px;
+}
+
+.toolbar-group-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  padding: 2px 6px;
+}
+
+/* ── Draggable Node Chips ─────────────────────────────────────────────────── */
+.draggable-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--node-color, var(--accent));
+  border-radius: var(--radius-md);
+  cursor: grab;
+  user-select: none;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+.draggable-node:hover {
+  background: var(--bg-surface-3);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(2px);
+}
+.draggable-node:active {
+  cursor: grabbing;
+  transform: scale(0.97);
+}
+.draggable-node-icon {
+  font-size: 14px;
+  line-height: 1;
+  min-width: 18px;
+  text-align: center;
+}
+.draggable-node-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── Submit Button ───────────────────────────────────────────────────────── */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 18px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+  font-family: var(--font);
+}
+.submit-btn:hover  { background: #6aa0f8; box-shadow: 0 0 0 3px rgba(79,142,247,0.25); }
+.submit-btn:active { transform: scale(0.97); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── ReactFlow Canvas ────────────────────────────────────────────────────── */
+.react-flow__renderer { background: var(--bg-canvas); }
+
+.react-flow__handle {
+  width: 11px !important;
+  height: 11px !important;
+  border-radius: 50% !important;
+  border: 2px solid var(--bg-surface) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  z-index: 10;
+}
+.react-flow__handle-source {
+  background: var(--accent) !important;
+}
+.react-flow__handle-target {
+  background: var(--accent-green) !important;
+}
+.react-flow__handle:hover {
+  transform: scale(1.5) !important;
+  box-shadow: 0 0 0 4px rgba(79,142,247,0.3) !important;
+}
+
+.react-flow__edge-path {
+  stroke: var(--border-light) !important;
+  stroke-width: 2 !important;
+}
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover    .react-flow__edge-path {
+  stroke: var(--accent) !important;
+  stroke-width: 2.5 !important;
+}
+.react-flow__connection-path {
+  stroke: var(--accent) !important;
+  stroke-width: 2 !important;
+}
+
+.react-flow__node.selected > div {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 2px;
+}
+
+.react-flow__controls {
+  background: var(--bg-surface-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: var(--bg-surface-2) !important;
+  border-bottom-color: var(--border) !important;
+  fill: var(--text-secondary) !important;
+}
+.react-flow__controls-button:hover {
+  background: var(--bg-surface-3) !important;
+  fill: var(--text-primary) !important;
+}
+.react-flow__minimap {
+  background: var(--bg-surface-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+}
+.react-flow__minimap-mask  { fill: rgba(13,17,23,0.7) !important; }
+.react-flow__minimap-node  { fill: var(--bg-surface-3) !important; stroke: var(--border) !important; }
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar            { width: 5px; height: 5px; }
+::-webkit-scrollbar-track      { background: transparent; }
+::-webkit-scrollbar-thumb      { background: var(--border-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover{ background: #4a5578; }
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+@keyframes toastProgress {
+  from { width: 100%; }
+  to   { width: 0%;   }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Canvas action buttons ───────────────────────────────────────────────────── */
+.canvas-action-btn {
+  padding: 5px 12px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.15s, color 0.15s;
+}
+.canvas-action-btn:hover { background: var(--bg-surface-3); color: var(--text-primary); }
+.canvas-action-btn--danger:hover { background: rgba(247,95,95,0.12); color: #f75f5f; border-color: #f75f5f55; }
+
+/* ── Submit button spinner ──────────────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.submit-btn         { display: flex; align-items: center; gap: 7px; }
+.submit-btn--loading { opacity: 0.85; cursor: not-allowed; }
+.app-header-actions  { display: flex; align-items: center; gap: 10px; }
