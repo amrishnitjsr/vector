@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore }      from './store';
-import { useShallow }    from 'zustand/react/shallow';
+import { shallow }       from 'zustand/shallow';
 import { EmptyCanvas }   from './components/EmptyCanvas';
 import { InputNode }    from './nodes/inputNode';
 import { LLMNode }      from './nodes/llmNode';
@@ -62,7 +62,7 @@ export const PipelineUI = () => {
   const {
     nodes, edges, getNodeID, addNode, clearCanvas,
     onNodesChange, onEdgesChange, onConnect,
-  } = useStore(useShallow(selector));
+  } = useStore(selector, shallow);
 
   useEffect(() => {
     const handler = (e) => {

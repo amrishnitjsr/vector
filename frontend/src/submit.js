@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useStore }   from './store';
-import { useShallow } from 'zustand/react/shallow';
+import { shallow }    from 'zustand/shallow';
 import { api }        from './api';
 import { useToast }   from './hooks/useToast';
 
 const selector = (state) => ({ nodes: state.nodes, edges: state.edges });
 
 export const SubmitButton = () => {
-  const { nodes, edges } = useStore(useShallow(selector));
+  const { nodes, edges } = useStore(selector, shallow);
   const { toast }        = useToast();
   const [loading, setLoading] = useState(false);
 
